@@ -1,0 +1,36 @@
+html
+  head
+    title='Time Records (' + (fromDateStr || '*') + ' through ' + (toDateStr || '*') + ')'
+  body
+    h1 Export of Time Records
+    h2 Metadata
+    p
+      span='Generated on: ' + generatedDateStr
+      br
+      if fromDateStr
+        span='From: ' + fromDateStr
+        br
+      if toDateStr
+        span='To: ' + toDateStr
+        br
+      if singleUserEmail
+        span='User email: ' + singleUserEmail
+        br
+      else
+        span='Exported by: ' + exporterEmail
+    if singleUserEmail
+      h2 Time Records (grouped by day)
+    else
+      h2 Time Records (grouped by day and aggregated by user)
+    for userDay in groups
+      ul
+        li
+          b='Date: ' + userDay.dateStr
+        if userDay.userEmail
+          li='User email: ' + userDay.userEmail
+        li='Total time: ' + userDay.totalTimeStr
+        if userDay.notes.length > 0
+          li='Notes'
+            ul
+              for note in userDay.notes
+                li=note
